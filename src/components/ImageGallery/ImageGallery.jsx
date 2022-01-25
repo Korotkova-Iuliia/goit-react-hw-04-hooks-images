@@ -6,32 +6,20 @@ class ImageGallery extends Component {
   state = {
     listImages: [],
     searchImage: '',
-    page: 1,
+    page: 2,
     loading: false,
-    // filter: '',
   };
-  //   async componentDidMount() {
-  //     this.setState({ loading: true });
-  //     try {
-  //       const listImages = await getAxiosTag(this.state.searchImage);
-  //       this.setState({
-  //         listImages: listImages.hits,
-  //         loading: false,
-  //       });
-  //       console.log(listImages);
-  //       console.log(listImages.hits);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
+
   async componentDidUpdate(prevProps, prevState) {
+    const { searchImage } = this.props;
+    const { page } = this.state;
     console.log(prevProps.searchImage);
-    console.log(this.props.searchImage);
-    console.log(prevProps.searchImage !== this.props.searchImage);
-    if (prevProps.searchImage !== this.props.searchImage)
-      this.setState({ loading: true });
+    console.log(page);
+    console.log(searchImage);
+    console.log(prevProps.searchImage !== searchImage);
+    if (prevProps.searchImage !== searchImage) this.setState({ loading: true });
     try {
-      const listImages = await getAxiosTag(this.props.searchImage);
+      const listImages = await getAxiosTag(searchImage, page);
       this.setState({
         listImages: listImages.hits,
         loading: false,
@@ -43,13 +31,19 @@ class ImageGallery extends Component {
     }
   }
   render() {
-    const { listImages } = this.state;
+    const { listImages, loading } = this.state;
+
     return (
-      <ul>
-        {listImages.map(dataImage => {
-          return <ImageGalleryItem key={dataImage.id} dataImage={dataImage} />;
-        })}
-      </ul>
+      <>
+        {loading && <h1>load</h1>}
+        <ul>
+          {listImages.map(dataImage => {
+            return (
+              <ImageGalleryItem key={dataImage.id} dataImage={dataImage} />
+            );
+          })}
+        </ul>
+      </>
     );
   }
 }
@@ -66,3 +60,18 @@ export default ImageGallery;
 // };
 // export default ImageGallery;
 // // return <ImageGalleryItem key={dataImage.id} dataImage={dataImage} />;
+
+//   async componentDidMount() {
+//     this.setState({ loading: true });
+//     try {
+//       const listImages = await getAxiosTag(this.state.searchImage);
+//       this.setState({
+//         listImages: listImages.hits,
+//         loading: false,
+//       });
+//       console.log(listImages);
+//       console.log(listImages.hits);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }

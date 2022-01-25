@@ -8,7 +8,7 @@ class Searchbar extends Component {
     searchImage: '',
   };
   handleInputName = e => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     this.setState({
       searchImage: e.currentTarget.value,
     });
@@ -24,6 +24,7 @@ class Searchbar extends Component {
     });
   };
   render() {
+    const { searchImage } = this.state;
     return (
       <header>
         <form onSubmit={this.handleSubmit}>
@@ -36,6 +37,7 @@ class Searchbar extends Component {
           <input
             type="text"
             autoComplete="off"
+            value={searchImage}
             autoFocus
             onChange={this.handleInputName}
             placeholder="Search images and photos"
@@ -45,5 +47,4 @@ class Searchbar extends Component {
     );
   }
 }
-
 export default Searchbar;

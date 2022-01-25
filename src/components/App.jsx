@@ -8,8 +8,8 @@ export class App extends Component {
   state = {
     // listImages: [],
     searchImage: '',
-    page: 1,
-    loading: false,
+    // page: 1,
+
     // filter: '',
   };
   // async componentDidMount() {
@@ -36,19 +36,19 @@ export class App extends Component {
   // }
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
-    console.log(imageName);
+    // console.log(imageName);
   };
   render() {
-    const { loading } = this.state;
-
+    const { loading, searchImage } = this.state;
     return (
       <>
         <Searchbar onSearch={this.handleSearchBar} />
         <Button onChange={this.inputTagImage} />
-        {loading && <h1>load</h1>}
+
         <ImageGallery
           // listImages={listImages}
-          searchImage={this.state.searchImage}
+
+          searchImage={searchImage}
         />
         <ToastContainer position="top-center" autoClose={2000} />
       </>
