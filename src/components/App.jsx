@@ -15,10 +15,10 @@ const SpinnerWrepper = styled.div`
 `;
 export class App extends Component {
   state = {
-    // listImages: [],
+    listImages: [],
     searchImage: '',
-    page: 1,
-    filter: '',
+    page: 2,
+    loading: false,
   };
   // async componentDidMount() {
   //   this.setState({ loading: true });
@@ -34,30 +34,47 @@ export class App extends Component {
   //     console.log(error);
   //   }
   // }
-  componentDidUpdate(prevProps, prevState) {
-    // console.log(prevProps);
-    if (this.state.searchImage !== prevState.searchImage)
-      console.log(this.state.searchImage);
-    console.log(prevState.searchImage);
+  // componentDidUpdate(prevProps, prevState) {
+  //   // console.log(prevProps);
+  //   if (this.state.searchImage !== prevState.searchImage)
+  //     console.log(this.state.searchImage);
+  //   console.log(prevState.searchImage);
 
-    console.log(this.state);
+  //   console.log(this.state);
+  // }
+  async componentDidUpdate(prevProps, prevState) {
+    const { searchImage } = this.state;
+    const { page } = this.state;
+    console.log(page);
+    console.log(searchImage);
+    console.log(prevState.searchImage !== searchImage);
+    if (prevState.searchImage !== searchImage)
+      // this.setState({ loading: true });
+      try {
+        const listImages = await getAxiosTag(searchImage, page);
+        this.setState({
+          listImages: listImages.hits,
+          loading: false,
+        });
+        console.log(listImages);
+        console.log(listImages.hits);
+        return;
+      } catch (error) {
+        console.log(error);
+      }
   }
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
     // console.log(imageName);
   };
   render() {
-    const { loading, searchImage } = this.state;
+    const { loading, searchImage, listImages } = this.state;
     return (
       <>
         <Searchbar onSearch={this.handleSearchBar} />
         <Button onChange={this.inputTagImage} />
-
-        <ImageGallery
-          // listImages={listImages}
-
-          searchImage={searchImage}
-        />
+        {loading && <h1>load</h1>}
+        <ImageGallery listImages={listImages} searchImage={searchImage} />
         <SpinnerWrepper>
           <Oval
             ariaLabel="loading-indicator"

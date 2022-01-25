@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 import Icon from '../icon/Icon';
 class Searchbar extends Component {
