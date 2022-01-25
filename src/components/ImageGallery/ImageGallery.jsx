@@ -1,16 +1,13 @@
-// {
-//   /* <ul class="gallery">
-//   <ImageGalleryItem />
-// </ul>; */
-// }
-// export const VideoList = ({ videos, onSelect }) => {
-//   return (
-//     <ul>
-//       {videos.map(video => (
-//         <li key={video.id} onClick={() => onSelect(video.link)}>
-//           {video.link}
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// };
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+
+export const ImageGallery = ({ listImages }) => {
+  return (
+    <ul>
+      {listImages.map(dataImage => {
+        return <ImageGalleryItem key={dataImage.id} dataImage={dataImage} />;
+      })}
+    </ul>
+  );
+};
+export default ImageGallery;
+// return <ImageGalleryItem key={dataImage.id} dataImage={dataImage} />;

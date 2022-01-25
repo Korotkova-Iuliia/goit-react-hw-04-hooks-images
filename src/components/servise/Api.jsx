@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+// const { currentPage } = this.state;
 const API_KEY = '24377768-1651c24dae1d00899e27f41ae';
 axios.defaults.baseURL = 'https://pixabay.com/api';
 const URL = `/?q=cat&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;

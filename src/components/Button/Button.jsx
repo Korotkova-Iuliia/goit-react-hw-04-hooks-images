@@ -1,5 +1,9 @@
-const Button = () => {
-  return <button type="button">Load more</button>;
+const Button = onChange => {
+  return (
+    <button type="button" onChange={() => onChange()}>
+      Load more
+    </button>
+  );
 };
 export default Button;
 // export const Controls = ({ current, total, onChange }) => {
