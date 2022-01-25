@@ -1,3 +1,12 @@
+const Modal = ({ url }) => {
+  return (
+    <div>
+      <img src={url} />
+    </div>
+  );
+};
+export default Modal;
+// alt = {};
 // div class="overlay">
 //   <div class="modal">
 //     <img src="" alt="" />

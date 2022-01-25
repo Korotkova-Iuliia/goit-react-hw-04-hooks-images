@@ -1,7 +1,14 @@
-const ImageGalleryItem = ({ dataImage: { previewURL, tags } }) => {
+const ImageGalleryItem = ({
+  onSelectImage,
+  dataImage: { previewURL, largeImageURL, tags },
+}) => {
   return (
     <li>
-      <img src={previewURL} alt={tags} />
+      <img
+        src={previewURL}
+        alt={tags}
+        onClick={() => onSelectImage(largeImageURL)}
+      />
     </li>
   );
 };
