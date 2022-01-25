@@ -1,16 +1,24 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { Oval } from 'react-loader-spinner';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
 import getAxiosTag from './servise/Api';
 import ImageGallery from './ImageGallery/ImageGallery';
+import styled from 'styled-components';
+
+const SpinnerWrepper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+`;
 export class App extends Component {
   state = {
     // listImages: [],
     searchImage: '',
-    // page: 1,
-
-    // filter: '',
+    page: 1,
+    filter: '',
   };
   // async componentDidMount() {
   //   this.setState({ loading: true });
@@ -26,14 +34,14 @@ export class App extends Component {
   //     console.log(error);
   //   }
   // }
-  // componentDidUpdate(prevProps, prevState) {
-  //   // console.log(prevProps);
-  //   if (this.state.searchImage !== prevState.searchImage)
-  //     console.log(this.state.searchImage);
-  //   console.log(prevState.searchImage);
+  componentDidUpdate(prevProps, prevState) {
+    // console.log(prevProps);
+    if (this.state.searchImage !== prevState.searchImage)
+      console.log(this.state.searchImage);
+    console.log(prevState.searchImage);
 
-  //   console.log(this.state);
-  // }
+    console.log(this.state);
+  }
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
     // console.log(imageName);
@@ -50,6 +58,16 @@ export class App extends Component {
 
           searchImage={searchImage}
         />
+        <SpinnerWrepper>
+          <Oval
+            ariaLabel="loading-indicator"
+            height={70}
+            width={70}
+            strokeWidth={4}
+            color="gray"
+            secondaryColor="yellow"
+          />
+        </SpinnerWrepper>
         <ToastContainer position="top-center" autoClose={2000} />
       </>
     );

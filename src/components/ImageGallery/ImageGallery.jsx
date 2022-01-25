@@ -26,6 +26,7 @@ class ImageGallery extends Component {
       });
       console.log(listImages);
       console.log(listImages.hits);
+      return;
     } catch (error) {
       console.log(error);
     }
