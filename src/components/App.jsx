@@ -6,39 +6,50 @@ import getAxiosTag from './servise/Api';
 import ImageGallery from './ImageGallery/ImageGallery';
 export class App extends Component {
   state = {
-    listImages: [],
+    // listImages: [],
     searchImage: '',
     page: 1,
     loading: false,
     // filter: '',
   };
-  async componentDidMount() {
-    this.setState({ loading: true });
-    try {
-      const listImages = await getAxiosTag();
-      this.setState({
-        listImages: listImages.hits,
-        loading: false,
-      });
-      console.log(listImages);
-      console.log(listImages.hits);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async componentDidMount() {
+  //   this.setState({ loading: true });
+  //   try {
+  //     const listImages = await getAxiosTag();
+  //     this.setState({
+  //       listImages: listImages.hits,
+  //       loading: false,
+  //     });
+  //     console.log(listImages);
+  //     console.log(listImages.hits);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  // componentDidUpdate(prevProps, prevState) {
+  //   // console.log(prevProps);
+  //   if (this.state.searchImage !== prevState.searchImage)
+  //     console.log(this.state.searchImage);
+  //   console.log(prevState.searchImage);
+
+  //   console.log(this.state);
+  // }
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
     console.log(imageName);
   };
   render() {
-    const { listImages, loading } = this.state;
-    console.log(listImages);
+    const { loading } = this.state;
+
     return (
       <>
         <Searchbar onSearch={this.handleSearchBar} />
         <Button onChange={this.inputTagImage} />
         {loading && <h1>load</h1>}
-        <ImageGallery listImages={listImages} />
+        <ImageGallery
+          // listImages={listImages}
+          searchImage={this.state.searchImage}
+        />
         <ToastContainer position="top-center" autoClose={2000} />
       </>
     );
