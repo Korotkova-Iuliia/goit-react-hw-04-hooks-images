@@ -1,6 +1,6 @@
-const Button = onChange => {
+const Button = onClick => {
   return (
-    <button type="button" onChange={() => onChange()}>
+    <button type="button" onClick={() => onClick()}>
       Load more
     </button>
   );

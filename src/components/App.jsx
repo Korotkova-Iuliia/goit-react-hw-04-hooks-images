@@ -18,7 +18,7 @@ export class App extends Component {
   state = {
     listImages: [],
     searchImage: '',
-    page: 2,
+    page: 5,
     isLoading: false,
     largeImageURL: null,
     showModal: false,
@@ -28,34 +28,43 @@ export class App extends Component {
     const { page } = this.state;
     console.log(prevState.searchImage !== searchImage);
     if (prevState.searchImage !== searchImage) {
-      this.setState({ isLoading: true });
-      try {
-        const listImages = await getAxiosTag(searchImage, page);
-        this.setState({
-          listImages: listImages.hits,
-          isLoading: false,
-        });
-        console.log(listImages.hits);
-        return;
-      } catch (error) {
-        console.log(error);
-      }
+      this.getAxioslistImages();
+      // this.setState({ isLoading: true });
+      // try {
+      //   const listImages = await getAxiosTag(searchImage, page);
+      //   this.setState({
+      //     listImages: listImages.hits,
+      //     isLoading: false,
+      //   });
+      //   console.log(listImages.hits);
+      //   return;
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
   }
-  handleLoadMore = () => {
-    console.log('sdfargerthaerhd');
+  getAxioslistImages = async () => {
+    const { searchImage, page } = this.state;
+    this.setState({ isLoading: true });
+    try {
+      const listImages = await getAxiosTag(searchImage, page);
+      this.setState({
+        listImages: listImages.hits,
+        isLoading: false,
+        page: page + 1,
+      });
+      console.log(listImages.hits);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  handleLoadMore = async () => {};
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
   };
 
-  // toggleModal = (largeImageURL, tags) => {
-  //   this.setState(({ showModal }) => ({
-  //     showModal: !showModal,
-  //     selectImages: largeImageURL,
-  //     tags,
-  //   }));
-  // };
   selectImages = (largeImageURL, tags, showModal) => {
     this.setState({ largeImageURL, tags, showModal: !showModal });
   };
@@ -92,11 +101,13 @@ export class App extends Component {
             onSelectImages={this.selectImages}
           />
         )}
-        <Button onClick={this.handleLoadMore} />
+        {!isLoading && listImages.length > 0 && (
+          <Button type="button" onClick={this.handleLoadMore} />
+        )}
         {showModal && (
           <Modal onClose={this.closeModal}>
-            <img src={largeImageURL} alt={tags} />
-            <button type="button">x</button>
+            <img src={largeImageURL} alt={tags} /> (
+            <button type="button">x</button>)
           </Modal>
         )}
 
