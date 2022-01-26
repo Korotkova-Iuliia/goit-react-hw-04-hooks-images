@@ -18,7 +18,7 @@ export class App extends Component {
   state = {
     listImages: [],
     searchImage: '',
-    page: 5,
+    page: 1,
     isLoading: false,
     largeImageURL: null,
     showModal: false,
@@ -27,20 +27,11 @@ export class App extends Component {
     const { searchImage } = this.state;
     const { page } = this.state;
     console.log(prevState.searchImage !== searchImage);
-    if (prevState.searchImage !== searchImage) {
+    console.log(prevState.page);
+    console.log(page);
+
+    if (prevState.searchImage !== searchImage && page === 1) {
       this.getAxioslistImages();
-      // this.setState({ isLoading: true });
-      // try {
-      //   const listImages = await getAxiosTag(searchImage, page);
-      //   this.setState({
-      //     listImages: listImages.hits,
-      //     isLoading: false,
-      //   });
-      //   console.log(listImages.hits);
-      //   return;
-      // } catch (error) {
-      //   console.log(error);
-      // }
     }
   }
   getAxioslistImages = async () => {
@@ -48,11 +39,11 @@ export class App extends Component {
     this.setState({ isLoading: true });
     try {
       const listImages = await getAxiosTag(searchImage, page);
-      this.setState({
-        listImages: listImages.hits,
+      this.setState(prevState => ({
+        listImages: [...prevState.listImages, ...listImages.hits],
         isLoading: false,
-        page: page + 1,
-      });
+        page: prevState.page + 1,
+      }));
       console.log(listImages.hits);
       return;
     } catch (error) {
@@ -60,7 +51,10 @@ export class App extends Component {
     }
   };
 
-  handleLoadMore = async () => {};
+  handleLoadMore = async () => {
+    const { searchImage, page } = this.state;
+    await this.getAxioslistImages(searchImage, page);
+  };
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
   };
@@ -102,7 +96,7 @@ export class App extends Component {
           />
         )}
         {!isLoading && listImages.length > 0 && (
-          <Button type="button" onClick={this.handleLoadMore} />
+          <Button type="button" onClick={this.getAxioslistImages} />
         )}
         {showModal && (
           <Modal onClose={this.closeModal}>
