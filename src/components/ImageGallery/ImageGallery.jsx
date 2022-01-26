@@ -1,7 +1,7 @@
 // import { Component } from 'react';
 // import getAxiosTag from '../servise/Api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
-const ImageGallery = ({ listImages, onSelectImage, onCick }) => {
+const ImageGallery = ({ listImages, onSelectImage, onSelectImages }) => {
   return (
     <ul>
       {listImages.map(dataImage => {
@@ -10,7 +10,7 @@ const ImageGallery = ({ listImages, onSelectImage, onCick }) => {
             key={dataImage.id}
             dataImage={dataImage}
             onSelectImage={onSelectImage}
-            onCick={onCick}
+            onSelectImages={onSelectImages}
           />
         );
       })}

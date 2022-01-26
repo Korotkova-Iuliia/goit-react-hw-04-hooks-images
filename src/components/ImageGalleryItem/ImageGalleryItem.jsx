@@ -1,6 +1,5 @@
 const ImageGalleryItem = ({
-  onSelectImage,
-  onCick,
+  onSelectImages,
   dataImage: { previewURL, largeImageURL, tags },
 }) => {
   return (
@@ -8,10 +7,7 @@ const ImageGalleryItem = ({
       <img
         src={previewURL}
         alt={tags}
-        onClick={() => {
-          return onCick();
-        }}
-        // onClick={() => onSelectImage(largeImageURL, tags)}
+        onClick={() => onSelectImages(largeImageURL, tags)}
       />
     </li>
   );

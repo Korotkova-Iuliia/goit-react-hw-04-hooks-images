@@ -13,7 +13,7 @@ export const ModalContent = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   min-height: 300px;
-  max-width: 600px;
+  max-width: 1280px;
   width: 100%;
   padding: 12px;
   background-color: #fff;

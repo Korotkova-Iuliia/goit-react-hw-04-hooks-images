@@ -20,7 +20,7 @@ export class App extends Component {
     searchImage: '',
     page: 2,
     isLoading: false,
-    selectImages: null,
+    largeImageURL: null,
     showModal: false,
   };
   async componentDidUpdate(prevProps, prevState) {
@@ -57,7 +57,7 @@ export class App extends Component {
   //   }));
   // };
   selectImages = (largeImageURL, tags) => {
-    this.setState({ selectImages: largeImageURL, tags });
+    this.setState({ largeImageURL, tags, showModal: true });
   };
   toggleModal = () => {
     this.setState(({ showModal }) => ({
@@ -69,7 +69,7 @@ export class App extends Component {
       isLoading,
       searchImage,
       listImages,
-      selectImages,
+      largeImageURL,
       tags,
       showModal,
     } = this.state;
@@ -92,13 +92,13 @@ export class App extends Component {
           <ImageGallery
             listImages={listImages}
             searchImage={searchImage}
-            onCick={this.toggleModal}
+            onSelectImages={this.selectImages}
           />
         )}
         <Button onClick={this.handleLoadMore} />
         {showModal && (
           <Modal onClose={this.toggleModal}>
-            <div onSelect={this.selectImages}>sgargdrgaerf</div>
+            <img src={largeImageURL} alt={tags} />
 
             {/* <img src={url} alt={tags} /> */}
             {/* <TodoEditor onSubmit={this.addTodo} /> */}
@@ -109,7 +109,7 @@ export class App extends Component {
           //   onClose={this.toggleModal}
           //   onSelectImage={this.selectImages}
           // >
-          //   {/* <img src={url} alt={tags} /> */}
+
           //   {/* <TodoEditor onSubmit={this.addTodo} /> */}
           // </Modal>
         )}
