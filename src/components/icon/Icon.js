@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import svg from '../../images/sprite.svg';
 const Icon = ({ name, fill, width, height, stroke, className }) => {
   return (
@@ -21,3 +22,22 @@ Icon.defaultProps = {
   stroke: 'transparent',
   className: 'icon',
 };
+
+Icon.propTypes = {
+  fill: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  stroke: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
+};
+// ContactsList.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+
+//   ),
+//   onDeleteContact: PropTypes.func.isRequired,
+// };

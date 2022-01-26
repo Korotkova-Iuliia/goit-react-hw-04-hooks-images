@@ -8,6 +8,8 @@ export const ModalBackdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 export const ModalContent = styled.div`
+  /* max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 24px); */
   position: absolute;
   top: 50%;
   left: 50%;

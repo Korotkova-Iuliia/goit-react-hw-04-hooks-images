@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import { ModalBackdrop, ModalContent } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 export default class Modal extends Component {
@@ -19,11 +20,6 @@ export default class Modal extends Component {
   };
 
   handleBackdropClick = e => {
-    // console.log('Кликнули в бекдроп');
-
-    // console.log('currentTarget: ', e.currentTarget);
-    // console.log('target: ', e.target);
-
     if (e.currentTarget === e.target) {
       this.props.onClose();
     }
@@ -41,21 +37,7 @@ export default class Modal extends Component {
     );
   }
 }
-// div class="overlay">
-//   <div class="modal">
-//     <img src="" alt="" />
-//   </div>
-// </div>
 
-// import * as basicLightbox from 'basiclightbox';
-
-// const instance = basicLightbox.create(`
-//     <div class="modal">
-//         <p>
-//             Your first lightbox with just a few lines of code.
-//             Yes, it's really that simple.
-//         </p>
-//     </div>
-// `);
-
-// instance.show();
+Modal.propTypes = {
+  onClick: PropTypes.func,
+};
