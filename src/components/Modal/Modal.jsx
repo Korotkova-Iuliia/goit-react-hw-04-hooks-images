@@ -2,45 +2,21 @@ import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalBackdrop, ModalContent } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
-// {
-// //   url, tags;
-// }
-// const Modal = () => {
-//   return (
-//     <ModalBackdrop>
-//       <ModalContent>{this.props.children}</ModalContent>
-//       {/* <ModalContent>{this.props.children}</ModalContent> */}
-//     </ModalBackdrop>
-//   );
-// };
-// export default Modal;
-// const Modal = ({ url, tags }) => {
-//   return (
-//     <div>
-//       <img src={url} alt={tags} />
-//     </div>
-//   );
-// };
-// export default Modal;
-
 export default class Modal extends Component {
-  //   componentDidMount() {
-  //     console.log('Modal componentDidMount');
-  //     window.addEventListener('keydown', this.handleKeyDown);
-  //   }
-
-  //   componentWillUnmount() {
-  //     console.log('Modal componentWillUnmount');
-  //     window.removeEventListener('keydown', this.handleKeyDown);
-  //   }
-
-  //   handleKeyDown = e => {
-  //     if (e.code === 'Escape') {
-  //       console.log('Нажали ESC, нужно закрыть модалку');
-
-  //       this.props.onClose();
-  //     }
-  //   };
+  componentDidMount() {
+    console.log('Modal componentDidMount');
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+  componentWillUnmount() {
+    console.log('Modal componentWillUnmount');
+    window.removeEventListener('keydown', this.handleKeyDown);
+  }
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
+      console.log('Нажали ESC, нужно закрыть модалку');
+      this.props.onClose();
+    }
+  };
 
   //   handleBackdropClick = event => {
   //     // console.log('Кликнули в бекдроп');
@@ -54,18 +30,12 @@ export default class Modal extends Component {
   //   };
 
   render() {
-    return (
+    return createPortal(
       <ModalBackdrop>
         <ModalContent>{this.props.children}</ModalContent>
-        {/* <ModalContent>{this.props.children}</ModalContent> */}
-      </ModalBackdrop>
+      </ModalBackdrop>,
+      modalRoot
     );
-    //     return createPortal(
-    //       <ModalBackdrop onClick={this.handleBackdropClick}>
-    //         <ModalContent>{this.props.children}</ModalContent>
-    //       </ModalBackdrop>,
-    //       modalRoot
-    //     );
   }
 }
 // div class="overlay">

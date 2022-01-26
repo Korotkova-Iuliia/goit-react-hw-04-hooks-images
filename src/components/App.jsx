@@ -56,13 +56,11 @@ export class App extends Component {
   //     tags,
   //   }));
   // };
-  selectImages = (largeImageURL, tags) => {
-    this.setState({ largeImageURL, tags, showModal: true });
+  selectImages = (largeImageURL, tags, showModal) => {
+    this.setState({ largeImageURL, tags, showModal: !showModal });
   };
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
+  toggleModal = showModal => {
+    this.setState({ showModal: !showModal });
   };
   render() {
     const {
@@ -88,10 +86,9 @@ export class App extends Component {
             />
           </SpinnerWrepper>
         )}
-        {listImages && (
+        {listImages.length > 0 && (
           <ImageGallery
             listImages={listImages}
-            searchImage={searchImage}
             onSelectImages={this.selectImages}
           />
         )}
@@ -99,19 +96,8 @@ export class App extends Component {
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <img src={largeImageURL} alt={tags} />
-
-            {/* <img src={url} alt={tags} /> */}
-            {/* <TodoEditor onSubmit={this.addTodo} /> */}
+            <button type="button">x</button>
           </Modal>
-          // <Modal
-          //   url={selectImages}
-          //   tags={tags}
-          //   onClose={this.toggleModal}
-          //   onSelectImage={this.selectImages}
-          // >
-
-          //   {/* <TodoEditor onSubmit={this.addTodo} /> */}
-          // </Modal>
         )}
 
         <ToastContainer position="top-center" autoClose={2000} />
@@ -119,6 +105,15 @@ export class App extends Component {
     );
   }
 }
+// <Modal
+//   url={selectImages}
+//   tags={tags}
+//   onClose={this.toggleModal}
+//   onSelectImage={this.selectImages}
+// >
+
+//   {/* <TodoEditor onSubmit={this.addTodo} /> */}
+// </Modal>
 // {
 //   /* // <ImageGallery /> */
 // }
