@@ -26,11 +26,9 @@ export class App extends Component {
   async componentDidUpdate(prevProps, prevState) {
     const { searchImage } = this.state;
     const { page } = this.state;
-    console.log(prevState.searchImage !== searchImage);
     console.log(prevState.page);
     console.log(page);
-
-    if (prevState.searchImage !== searchImage) {
+    if (prevState.searchImage !== searchImage || prevState.page !== page) {
       this.getAxioslistImages();
     }
   }
@@ -42,6 +40,7 @@ export class App extends Component {
       this.setState(prevState => ({
         listImages: [...prevState.listImages, ...listImages.hits],
         isLoading: false,
+        page: page,
       }));
       console.log(listImages.hits);
       return;
@@ -50,12 +49,12 @@ export class App extends Component {
     }
   };
 
-  handleLoadMore = async () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
+  handleLoadMore = () => {
+    // const { page } = this.state;
+    this.setState(page => ({
+      page: (page += 1),
     }));
-    const { searchImage, page } = this.state;
-    await this.getAxioslistImages(searchImage, page);
+    console.log(this.state.page);
   };
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
@@ -92,7 +91,7 @@ export class App extends Component {
           />
         )}
         {!isLoading && listImages.length > 0 && (
-          <Button type="button" onClick={this.handleLoadMore} />
+          <Button type="button" loadMore={this.handleLoadMore} />
         )}
         {showModal && (
           <Modal onClose={this.closeModal}>

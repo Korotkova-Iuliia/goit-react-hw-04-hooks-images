@@ -1,6 +1,6 @@
-const Button = onClick => {
+const Button = ({ loadMore }) => {
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={() => loadMore()}>
       Load more
     </button>
   );
