@@ -18,13 +18,16 @@ export default class Modal extends Component {
     }
   };
 
-  handleBackdropClick = event => {
+  handleBackdropClick = e => {
     // console.log('Кликнули в бекдроп');
 
-    // console.log('currentTarget: ', event.currentTarget);
-    // console.log('target: ', event.target);
+    // console.log('currentTarget: ', e.currentTarget);
+    // console.log('target: ', e.target);
 
-    if (event.currentTarget === event.target) {
+    if (e.currentTarget === e.target) {
+      this.props.onClose();
+    }
+    if (e.target.nodeName === 'BUTTON') {
       this.props.onClose();
     }
   };

@@ -59,7 +59,7 @@ export class App extends Component {
   selectImages = (largeImageURL, tags, showModal) => {
     this.setState({ largeImageURL, tags, showModal: !showModal });
   };
-  toggleModal = showModal => {
+  closeModal = showModal => {
     this.setState({ showModal: false });
   };
   render() {
@@ -94,7 +94,7 @@ export class App extends Component {
         )}
         <Button onClick={this.handleLoadMore} />
         {showModal && (
-          <Modal onClose={this.toggleModal}>
+          <Modal onClose={this.closeModal}>
             <img src={largeImageURL} alt={tags} />
             <button type="button">x</button>
           </Modal>
