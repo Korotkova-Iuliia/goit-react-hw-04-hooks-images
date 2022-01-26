@@ -7,13 +7,13 @@ class Searchbar extends Component {
     searchImage: '',
   };
   handleInputName = e => {
-    // console.log(e.currentTarget.value);
     this.setState({
       searchImage: e.currentTarget.value,
     });
   };
   handleSubmit = e => {
     e.preventDefault();
+    console.log(this.props);
     if (this.state.searchImage.trim() === '') {
       return toast.warn('поисковая строка пуста!');
     }
@@ -47,3 +47,4 @@ class Searchbar extends Component {
   }
 }
 export default Searchbar;
+// disabled={!searchImage}

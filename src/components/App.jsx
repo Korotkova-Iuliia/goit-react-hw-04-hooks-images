@@ -19,24 +19,22 @@ export class App extends Component {
     listImages: [],
     searchImage: '',
     page: 2,
-    loading: false,
+    isLoading: false,
     selectImages: null,
+    showModal: false,
   };
   async componentDidUpdate(prevProps, prevState) {
     const { searchImage } = this.state;
     const { page } = this.state;
-    console.log(page);
-    console.log(searchImage);
     console.log(prevState.searchImage !== searchImage);
     if (prevState.searchImage !== searchImage) {
-      this.setState({ loading: true });
+      this.setState({ isLoading: true });
       try {
         const listImages = await getAxiosTag(searchImage, page);
         this.setState({
           listImages: listImages.hits,
-          loading: false,
+          isLoading: false,
         });
-        console.log(listImages);
         console.log(listImages.hits);
         return;
       } catch (error) {
@@ -50,20 +48,38 @@ export class App extends Component {
   handleSearchBar = imageName => {
     this.setState({ searchImage: imageName });
   };
-  selectImages = largeImageURL => {
-    this.setState({ selectImages: largeImageURL });
-    console.log(this.state.selectImages);
+
+  // toggleModal = (largeImageURL, tags) => {
+  //   this.setState(({ showModal }) => ({
+  //     showModal: !showModal,
+  //     selectImages: largeImageURL,
+  //     tags,
+  //   }));
+  // };
+  selectImages = (largeImageURL, tags) => {
+    this.setState({ selectImages: largeImageURL, tags });
+  };
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
   };
   render() {
-    const { loading, searchImage, listImages, selectImages } = this.state;
+    const {
+      isLoading,
+      searchImage,
+      listImages,
+      selectImages,
+      tags,
+      showModal,
+    } = this.state;
     return (
       <>
         <Searchbar onSearch={this.handleSearchBar} />
-        <Button onClick={this.handleLoadMore} />
-        {loading && (
+        {isLoading && (
           <SpinnerWrepper>
             <Oval
-              ariaLabel="loading-indicator"
+              ariaLabel="isLoading-indicator"
               height={70}
               width={70}
               strokeWidth={4}
@@ -72,12 +88,32 @@ export class App extends Component {
             />
           </SpinnerWrepper>
         )}
-        <ImageGallery
-          listImages={listImages}
-          searchImage={searchImage}
-          onSelectImage={this.selectImages}
-        />
-        <Modal url={selectImages} />
+        {listImages && (
+          <ImageGallery
+            listImages={listImages}
+            searchImage={searchImage}
+            onCick={this.toggleModal}
+          />
+        )}
+        <Button onClick={this.handleLoadMore} />
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <div onSelect={this.selectImages}>sgargdrgaerf</div>
+
+            {/* <img src={url} alt={tags} /> */}
+            {/* <TodoEditor onSubmit={this.addTodo} /> */}
+          </Modal>
+          // <Modal
+          //   url={selectImages}
+          //   tags={tags}
+          //   onClose={this.toggleModal}
+          //   onSelectImage={this.selectImages}
+          // >
+          //   {/* <img src={url} alt={tags} /> */}
+          //   {/* <TodoEditor onSubmit={this.addTodo} /> */}
+          // </Modal>
+        )}
+
         <ToastContainer position="top-center" autoClose={2000} />
       </>
     );
@@ -91,12 +127,12 @@ export class App extends Component {
 // https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
 // https://pixabay.com/api/?q=cat&page=1&key=24377768-1651c24dae1d00899e27f41ae&image_type=photo&orientation=horizontal&per_page=12
 // async componentDidMount() {
-//   this.setState({ loading: true });
+//   this.setState({ isLoading: true });
 //   try {
 //     const listImages = await getAxiosTag();
 //     this.setState({
 //       listImages: listImages.hits,
-//       loading: false,
+//       isLoading: false,
 //     });
 //     console.log(listImages);
 //     console.log(listImages.hits);
