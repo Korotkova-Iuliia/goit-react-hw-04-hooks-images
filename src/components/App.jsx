@@ -30,7 +30,7 @@ export class App extends Component {
     console.log(prevState.page);
     console.log(page);
 
-    if (prevState.searchImage !== searchImage && page === 1) {
+    if (prevState.searchImage !== searchImage) {
       this.getAxioslistImages();
     }
   }
@@ -42,7 +42,6 @@ export class App extends Component {
       this.setState(prevState => ({
         listImages: [...prevState.listImages, ...listImages.hits],
         isLoading: false,
-        page: prevState.page + 1,
       }));
       console.log(listImages.hits);
       return;
@@ -52,6 +51,9 @@ export class App extends Component {
   };
 
   handleLoadMore = async () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
     const { searchImage, page } = this.state;
     await this.getAxioslistImages(searchImage, page);
   };
@@ -62,18 +64,12 @@ export class App extends Component {
   selectImages = (largeImageURL, tags, showModal) => {
     this.setState({ largeImageURL, tags, showModal: !showModal });
   };
-  closeModal = showModal => {
+  closeModal = () => {
     this.setState({ showModal: false });
   };
   render() {
-    const {
-      isLoading,
-      searchImage,
-      listImages,
-      largeImageURL,
-      tags,
-      showModal,
-    } = this.state;
+    const { isLoading, listImages, largeImageURL, tags, showModal } =
+      this.state;
     return (
       <>
         <Searchbar onSearch={this.handleSearchBar} />
@@ -96,7 +92,7 @@ export class App extends Component {
           />
         )}
         {!isLoading && listImages.length > 0 && (
-          <Button type="button" onClick={this.getAxioslistImages} />
+          <Button type="button" onClick={this.handleLoadMore} />
         )}
         {showModal && (
           <Modal onClose={this.closeModal}>
