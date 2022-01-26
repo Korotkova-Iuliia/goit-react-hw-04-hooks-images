@@ -60,7 +60,7 @@ export class App extends Component {
     this.setState({ largeImageURL, tags, showModal: !showModal });
   };
   toggleModal = showModal => {
-    this.setState({ showModal: !showModal });
+    this.setState({ showModal: false });
   };
   render() {
     const {

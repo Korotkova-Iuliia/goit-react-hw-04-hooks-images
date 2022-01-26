@@ -18,20 +18,20 @@ export default class Modal extends Component {
     }
   };
 
-  //   handleBackdropClick = event => {
-  //     // console.log('Кликнули в бекдроп');
+  handleBackdropClick = event => {
+    // console.log('Кликнули в бекдроп');
 
-  //     // console.log('currentTarget: ', event.currentTarget);
-  //     // console.log('target: ', event.target);
+    // console.log('currentTarget: ', event.currentTarget);
+    // console.log('target: ', event.target);
 
-  //     if (event.currentTarget === event.target) {
-  //       this.props.onClose();
-  //     }
-  //   };
+    if (event.currentTarget === event.target) {
+      this.props.onClose();
+    }
+  };
 
   render() {
     return createPortal(
-      <ModalBackdrop>
+      <ModalBackdrop onClick={this.handleBackdropClick}>
         <ModalContent>{this.props.children}</ModalContent>
       </ModalBackdrop>,
       modalRoot
