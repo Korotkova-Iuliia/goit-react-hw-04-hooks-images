@@ -36,7 +36,6 @@ class Searchbar extends Component {
             <SearchFormButtonLabel></SearchFormButtonLabel>
             <Icon name="search" fill="gray" width="30px" height="30px" />
           </SearchFormButton>
-
           <SearchFormInput
             type="text"
             autoComplete="off"

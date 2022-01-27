@@ -18,7 +18,6 @@ const ImageGalleryItem = ({
   );
 };
 export default ImageGalleryItem;
-
 ImageGalleryItem.propTypes = {
   dataImage: PropTypes.shape({
     previewURL: PropTypes.string,

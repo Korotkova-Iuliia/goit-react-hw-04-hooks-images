@@ -1,3 +1,0 @@
-// {
-//   /* <TailSpin arialLabel="loading-indicator" />; */
-// }

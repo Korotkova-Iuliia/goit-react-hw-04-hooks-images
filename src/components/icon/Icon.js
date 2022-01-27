@@ -22,7 +22,6 @@ Icon.defaultProps = {
   stroke: 'transparent',
   className: 'icon',
 };
-
 Icon.propTypes = {
   fill: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -31,13 +30,3 @@ Icon.propTypes = {
   stroke: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
 };
-// ContactsList.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-
-//   ),
-//   onDeleteContact: PropTypes.func.isRequired,
-// };

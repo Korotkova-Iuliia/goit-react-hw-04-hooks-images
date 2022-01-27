@@ -18,7 +18,6 @@ export default class Modal extends Component {
       this.props.onClose();
     }
   };
-
   handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
       this.props.onClose();
@@ -27,7 +26,6 @@ export default class Modal extends Component {
       this.props.onClose();
     }
   };
-
   render() {
     return createPortal(
       <ModalBackdrop onClick={this.handleBackdropClick}>
@@ -37,7 +35,6 @@ export default class Modal extends Component {
     );
   }
 }
-
 Modal.propTypes = {
   onClick: PropTypes.func,
 };

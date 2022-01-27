@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { ImageGalleryWrapper } from './ImageGallery.styled';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
-
 const ImageGallery = ({ listImages, onSelectImages }) => {
   return (
     <ImageGalleryWrapper>
@@ -18,7 +17,6 @@ const ImageGallery = ({ listImages, onSelectImages }) => {
   );
 };
 export default ImageGallery;
-
 ImageGallery.propTypes = {
   listImages: PropTypes.arrayOf(
     PropTypes.shape({
