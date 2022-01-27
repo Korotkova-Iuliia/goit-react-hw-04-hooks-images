@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Oval } from 'react-loader-spinner';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
 import getAxiosTag from './servise/ApiImage';
@@ -25,14 +27,21 @@ export class App extends Component {
     largeImageURL: null,
     showModal: false,
   };
-  async componentDidUpdate(prevProps, prevState) {
-    const { searchImage, page } = this.state;
-    console.log(prevState.page);
-    console.log(page);
+  componentDidUpdate(prevProps, prevState) {
+    const { listImages, searchImage, page } = this.state;
+    console.log(prevState.searchImage);
+    console.log(searchImage);
+    console.log(prevState.searchImage === searchImage);
+    console.log(listImages.length > 0);
+    console.log(listImages.length);
+    if (prevState.searchImage !== searchImage && listImages.length > 0) {
+      this.setState({ listImages: [] });
+    }
     if (prevState.searchImage !== searchImage || prevState.page !== page) {
-      this.getAxioslistImages();
+      return this.getAxioslistImages();
     }
   }
+
   getAxioslistImages = async () => {
     const { searchImage, page } = this.state;
     this.setState({ isLoading: true });
@@ -42,6 +51,9 @@ export class App extends Component {
         listImages: [...prevState.listImages, ...listImages.hits],
         isLoading: false,
       }));
+      if (listImages.hits.length === 0) {
+        return toast.warn('Cannot find your request!');
+      }
       console.log(listImages.hits);
       return;
     } catch (error) {
@@ -51,10 +63,13 @@ export class App extends Component {
 
   handleLoadMore = () => {
     this.setState(prevState => ({
-      page: prevState + 1,
+      page: prevState.page + 1,
     }));
   };
   handleSearchBar = imageName => {
+    const { searchImage } = this.state;
+    console.log(imageName);
+    console.log(searchImage);
     this.setState({ searchImage: imageName });
   };
 
