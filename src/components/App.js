@@ -18,17 +18,17 @@ export class App extends Component {
     isLoading: false,
     largeImageURL: null,
     showModal: false,
-    hasMore: true,
   };
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_, prevState) {
     const { listImages, searchImage, page } = this.state;
     if (prevState.searchImage !== searchImage && listImages.length > 0) {
-      this.setState({ listImages: [] });
+      this.setState({ listImages: [], page: 1 });
     }
+
     if (prevState.searchImage !== searchImage || prevState.page !== page) {
-      return this.getAxioslistImages();
+      this.getAxioslistImages();
     }
-    if (prevState.listImages.length && listImages.length > 0) {
+    if (prevState.listImages.length > 0 && listImages.length > 0) {
       this.scrollBy();
     }
   }
@@ -103,9 +103,10 @@ export class App extends Component {
               onSelectImages={this.selectImages}
             />
           )}
-          {page === countPage && countImage > 0 && (
-            <Button type="button" loadMore={this.handleLoadMore} />
-          )}
+          {page === countPage ||
+            (countImage > 0 && (
+              <Button type="button" loadMore={this.handleLoadMore} />
+            ))}
           {showModal && (
             <Modal onClose={this.closeModal}>
               <img src={largeImageURL} alt={tags} /> (
