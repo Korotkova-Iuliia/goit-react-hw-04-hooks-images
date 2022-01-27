@@ -31,12 +31,11 @@ export class App extends Component {
   };
   componentDidUpdate(prevProps, prevState) {
     const { listImages, searchImage, page } = this.state;
-
     console.log(prevState.searchImage);
     console.log(searchImage);
     console.log(prevState.searchImage === searchImage);
-    console.log(listImages.length > 0);
-    console.log(listImages.length);
+    console.log(page > listImages.length / 12);
+    // console.log();
     if (prevState.searchImage !== searchImage && listImages.length > 0) {
       this.setState({ listImages: [] });
     }
@@ -44,15 +43,8 @@ export class App extends Component {
       return this.getAxioslistImages();
     }
     if (prevState.listImages.length && listImages.length > 0) {
-      // this.scrollToBottom();
       this.scrollBy();
     }
-    // if (page > photos.totalHits / perPage || photos.totalHits < perPage) {
-    //   return refs.loadMoreBtn.classList.add('is-hidden');
-    // }
-    // if (prevState.listImages.height === listImages.length) {
-    //   return toast.warn('You reach end of search!');
-    // }
   }
 
   // scrollToBottom = () => {
@@ -77,14 +69,12 @@ export class App extends Component {
         listImages: [...prevState.listImages, ...data.hits],
         isLoading: false,
       }));
-      if (page > data.totalHits / 12 || data.totalHits < 12) {
-        this.setState(prevState => ({
-          isLoading: false,
-        }));
-        return toast.warn('You reach end of search!');
-      }
-      if (data.hits.length === 0) {
+
+      if (data.totalHits === 0) {
         return toast.warn('Cannot find your request!');
+      }
+      if (page > data.totalHits / 12 && data.totalHits !== 0) {
+        return toast.warn('You reach end of search!');
       }
       console.log(data.hits);
       return;
@@ -112,8 +102,10 @@ export class App extends Component {
     this.setState({ showModal: false });
   };
   render() {
-    const { isLoading, listImages, largeImageURL, tags, showModal } =
+    const { isLoading, listImages, largeImageURL, tags, showModal, page } =
       this.state;
+    const countImage = listImages.length;
+    const countPage = countImage / 12;
     return (
       <>
         <GlobalStyle />
@@ -137,8 +129,7 @@ export class App extends Component {
               onSelectImages={this.selectImages}
             />
           )}
-
-          {listImages.length > 0 && (
+          {page === countPage && countImage > 0 && (
             <Button type="button" loadMore={this.handleLoadMore} />
           )}
           {showModal && (
@@ -147,7 +138,6 @@ export class App extends Component {
               <button type="button">x</button>)
             </Modal>
           )}
-
           <ToastContainer position="top-center" autoClose={2000} />
         </Container>
       </>
