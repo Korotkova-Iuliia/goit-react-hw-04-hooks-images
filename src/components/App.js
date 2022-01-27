@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { Oval } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
 import getAxiosTag from './servise/ApiImage';
@@ -26,6 +27,7 @@ export class App extends Component {
     isLoading: false,
     largeImageURL: null,
     showModal: false,
+    hasMore: true,
   };
   componentDidUpdate(prevProps, prevState) {
     const { listImages, searchImage, page } = this.state;
@@ -40,7 +42,14 @@ export class App extends Component {
     if (prevState.searchImage !== searchImage || prevState.page !== page) {
       return this.getAxioslistImages();
     }
+    this.scrollBy();
   }
+  scrollBy = () => {
+    window.scrollBy({
+      top: 500,
+      behavior: 'smooth',
+    });
+  };
 
   getAxioslistImages = async () => {
     const { searchImage, page } = this.state;
@@ -99,14 +108,12 @@ export class App extends Component {
               />
             </SpinnerWrepper>
           )}
-
           {listImages.length > 0 && (
             <ImageGallery
               listImages={listImages}
               onSelectImages={this.selectImages}
             />
           )}
-
           {!isLoading && listImages.length > 0 && (
             <Button type="button" loadMore={this.handleLoadMore} />
           )}

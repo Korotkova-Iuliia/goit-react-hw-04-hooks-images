@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { ImageGalleryWrapper } from './ImageGallery.styled';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+
 const ImageGallery = ({ listImages, onSelectImages }) => {
   return (
     <ImageGalleryWrapper>
