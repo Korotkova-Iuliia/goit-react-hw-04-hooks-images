@@ -47,6 +47,12 @@ export class App extends Component {
       // this.scrollToBottom();
       this.scrollBy();
     }
+    // if (page > photos.totalHits / perPage || photos.totalHits < perPage) {
+    //   return refs.loadMoreBtn.classList.add('is-hidden');
+    // }
+    // if (prevState.listImages.height === listImages.length) {
+    //   return toast.warn('You reach end of search!');
+    // }
   }
 
   // scrollToBottom = () => {
@@ -66,15 +72,21 @@ export class App extends Component {
     const { searchImage, page } = this.state;
     this.setState({ isLoading: true });
     try {
-      const listImages = await getAxiosTag(searchImage, page);
+      const data = await getAxiosTag(searchImage, page);
       this.setState(prevState => ({
-        listImages: [...prevState.listImages, ...listImages.hits],
+        listImages: [...prevState.listImages, ...data.hits],
         isLoading: false,
       }));
-      if (listImages.hits.length === 0) {
+      if (page > data.totalHits / 12 || data.totalHits < 12) {
+        this.setState(prevState => ({
+          isLoading: false,
+        }));
+        return toast.warn('You reach end of search!');
+      }
+      if (data.hits.length === 0) {
         return toast.warn('Cannot find your request!');
       }
-      console.log(listImages.hits);
+      console.log(data.hits);
       return;
     } catch (error) {
       console.log(error);
@@ -125,7 +137,8 @@ export class App extends Component {
               onSelectImages={this.selectImages}
             />
           )}
-          {!isLoading && listImages.length > 0 && (
+
+          {listImages.length > 0 && (
             <Button type="button" loadMore={this.handleLoadMore} />
           )}
           {showModal && (
