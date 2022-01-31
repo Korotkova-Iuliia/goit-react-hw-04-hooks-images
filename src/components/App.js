@@ -80,10 +80,6 @@ export class App extends Component {
   render() {
     const { isLoading, listImages, largeImageURL, tags, showModal, hasMore } =
       this.state;
-    const { data } = this.props;
-    // data.totalHits;
-    console.log(data);
-
     return (
       <>
         <GlobalStyle />
