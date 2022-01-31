@@ -18,6 +18,7 @@ export class App extends Component {
     isLoading: false,
     largeImageURL: null,
     showModal: false,
+    hasMore: true,
   };
   componentDidUpdate(_, prevState) {
     const { listImages, searchImage, page } = this.state;
@@ -52,6 +53,7 @@ export class App extends Component {
       }
       if (page > data.totalHits / 12 && data.totalHits !== 0) {
         toast.warn('You reach end of search!');
+        this.setState({ hasMore: false });
       }
       if (data.totalHits !== 0 && page === 1) {
         toast.warn(`Hoooray! We search ${data.totalHits} images `);
@@ -76,13 +78,12 @@ export class App extends Component {
     this.setState({ showModal: false });
   };
   render() {
-    const { isLoading, listImages, largeImageURL, tags, showModal, page } =
+    const { isLoading, listImages, largeImageURL, tags, showModal, hasMore } =
       this.state;
     const { data } = this.props;
     // data.totalHits;
     console.log(data);
-    const countImage = listImages.length;
-    const countPage = countImage / 12;
+
     return (
       <>
         <GlobalStyle />
@@ -106,7 +107,7 @@ export class App extends Component {
               onSelectImages={this.selectImages}
             />
           )}
-          {listImages.length > 0 && (
+          {hasMore && listImages.length > 0 && (
             <Button type="button" loadMore={this.handleLoadMore} />
           )}
           {showModal && (
