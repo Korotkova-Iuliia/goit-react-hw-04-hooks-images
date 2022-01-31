@@ -112,8 +112,7 @@ export class App extends Component {
           )}
           {showModal && (
             <Modal onClose={this.closeModal}>
-              <img src={largeImageURL} alt={tags} /> (
-              <button type="button">x</button>)
+              <img src={largeImageURL} alt={tags} />
             </Modal>
           )}
           <ToastContainer position="top-center" autoClose={2000} />

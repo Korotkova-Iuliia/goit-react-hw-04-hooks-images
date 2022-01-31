@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-import { ModalBackdrop, ModalContent } from './Modal.styled';
+import { ModalBackdrop, ModalContent, CloseButton } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 export default class Modal extends Component {
   componentDidMount() {
@@ -29,7 +29,10 @@ export default class Modal extends Component {
   render() {
     return createPortal(
       <ModalBackdrop onClick={this.handleBackdropClick}>
-        <ModalContent>{this.props.children}</ModalContent>
+        <ModalContent>
+          <CloseButton type="button">x</CloseButton>
+          {this.props.children}
+        </ModalContent>
       </ModalBackdrop>,
       modalRoot
     );
