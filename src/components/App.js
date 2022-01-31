@@ -78,6 +78,9 @@ export class App extends Component {
   render() {
     const { isLoading, listImages, largeImageURL, tags, showModal, page } =
       this.state;
+    const { data } = this.props;
+    // data.totalHits;
+    console.log(data);
     const countImage = listImages.length;
     const countPage = countImage / 12;
     return (
@@ -103,10 +106,9 @@ export class App extends Component {
               onSelectImages={this.selectImages}
             />
           )}
-          {page === countPage ||
-            (countImage > 0 && (
-              <Button type="button" loadMore={this.handleLoadMore} />
-            ))}
+          {listImages.length > 0 && (
+            <Button type="button" loadMore={this.handleLoadMore} />
+          )}
           {showModal && (
             <Modal onClose={this.closeModal}>
               <img src={largeImageURL} alt={tags} /> (
