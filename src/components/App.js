@@ -103,9 +103,9 @@ export class App extends Component {
               onSelectImages={this.selectImages}
             />
           )}
-          {/* {hasMore && listImages.length > 0 && (
+          {hasMore && listImages.length > 0 && (
             <Button type="button" loadMore={this.handleLoadMore} />
-          )} */}
+          )}
           {showModal && (
             <Modal onClose={this.closeModal}>
               <img src={largeImageURL} alt={tags} />
