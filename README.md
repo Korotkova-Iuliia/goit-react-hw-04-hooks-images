@@ -59,3 +59,4 @@ Pages, в ветку `gh-pages`, каждый раз когда обновляе
 Через какое-то время живую страницу можно будет посмотреть по адресу указанному
 в отредактированном свойстве `homepage`, например
 [https://goitacademy.github.io/react-homework-template](https://goitacademy.github.io/react-homework-template).
+# goit-react-hw-04-hooks-images
