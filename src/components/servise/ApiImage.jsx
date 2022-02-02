@@ -6,4 +6,5 @@ const getAxiosTag = async (name, page) => {
   const response = await axios.get(URL);
   return response.data;
 };
+console.log('getAxiosTag');
 export default getAxiosTag;
