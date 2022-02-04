@@ -19,91 +19,36 @@ export function App() {
   const [showModal, setShowModal] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   useEffect(() => {
+    if (!searchImage) return;
+
     const getAxioslistImages = async () => {
       setIsLoading(true);
       try {
         const data = await getAxiosTag(searchImage, page);
-        setListImages([...listImages, ...data.hits]);
+        setListImages(prevImages => [...listImages, ...data.hits]);
+        // setListImages([...listImages, data.hits]);
+        setSearchImage('');
         setIsLoading(false);
+        setHasMore(true);
         scrollBy();
-        // if (data.totalHits === 0) {
-        //   toast.warn('Cannot find your request!');
-        // }
-        // if (page > data.totalHits / 12 && data.totalHits !== 0) {
-        //   toast.warn('You reach end of search!');
-        //   setHasMore(false);
-        // }
-        // if (data.totalHits !== 0 && page === 1) {
-        //   toast.warn(`Hoooray! We search ${data.totalHits} images `);
-        // }
+        if (data.totalHits === 0) {
+          toast.warn('Cannot find your request!');
+        }
+        if (page > data.totalHits / 12 && data.totalHits !== 0) {
+          toast.warn('You reach end of search!');
+          setHasMore(false);
+        }
+        if (data.totalHits !== 0 && page === 1) {
+          toast.warn(`Hoooray! We search ${data.totalHits} images `);
+        }
         return;
       } catch (error) {
         toast.warn('sorry, try again later');
       }
     };
     getAxioslistImages();
-  });
+  }, [listImages, page, searchImage]);
 
-  // useEffect(() => {
-  //   setListImages([]);
-
-  //   setPage([1]);
-  //   scrollBy();
-  //   // this.setState({ listImages: [], page: 1 });
-  // }, [searchImage]);
-  // useEffect(() => {
-  //   setListImages([]);
-  //   setPage([1]);
-  //   scrollBy();
-  //   // if (listImages.length > 0) {
-  //   //   setListImages([]);
-  //   //   setPage([1]);
-  //   //   scrollBy();
-  //   //   // this.setState({ listImages: [], page: 1 });
-  //   // }
-  //   // const getAxioslistImages = async () => {
-  //   //   // const { searchImage, page } = this.state;
-  //   //   // this.setState({ isLoading: true });
-  //   //   setIsLoading(true);
-  //   //   try {
-  //   //     const data = await getAxiosTag(searchImage, page);
-  //   //     setListImages([...listImages, ...data.hits]);
-  //   //     setIsLoading(false);
-  //   //     if (data.totalHits === 0) {
-  //   //       toast.warn('Cannot find your request!');
-  //   //     }
-  //   //     if (page > data.totalHits / 12 && data.totalHits !== 0) {
-  //   //       toast.warn('You reach end of search!');
-  //   //       setHasMore(false);
-  //   //     }
-  //   //     if (data.totalHits !== 0 && page === 1) {
-  //   //       toast.warn(`Hoooray! We search ${data.totalHits} images `);
-  //   //     }
-  //   //     return;
-  //   //   } catch (error) {
-  //   //     toast.warn('sorry, try again later');
-  //   //   }
-  //   // };
-  //   // if (prevState.searchImage !== searchImage || prevState.page !== page) {
-  //   //   this.getAxioslistImages();
-  //   // }
-  // }, [listImages, page, searchImage]);
-
-  // componentDidUpdate(_, prevState) {
-  //   // const { listImages, searchImage, page } = this.state;
-  //   if (prevState.searchImage !== searchImage && listImages.length > 0) {
-  //     setListImages([]);
-  //     setPage([1])
-  //     // this.setState({ listImages: [], page: 1 });
-  //   }
-
-  //   if (prevState.searchImage !== searchImage || prevState.page !== page) {
-  //     this.getAxioslistImages();
-  //   }
-  //   if (prevState.listImages.length > 0 && listImages.length > 0) {
-  //     this.scrollBy();
-  //   }
-  // }
   const scrollBy = () => {
     window.scrollBy({
       top: 600,
@@ -116,7 +61,17 @@ export function App() {
   };
   const handleSearchBar = imageName => {
     setSearchImage(imageName);
+    setListImages([]);
+    setPage(1);
   };
+  //  const [listImages, setListImages] = useState([]);
+  //  const [searchImage, setSearchImage] = useState('');
+  //  const [largeImageURL, setLargeImageURL] = useState(null);
+  //  const [page, setPage] = useState(1);
+  //  const [isLoading, setIsLoading] = useState(false);
+  //  const [showModal, setShowModal] = useState(false);
+  //  const [hasMore, setHasMore] = useState(false);
+
   const selectImages = (largeImageURL, tags, showModal) => {
     setLargeImageURL(largeImageURL);
     //  setTags(tags);
@@ -124,8 +79,7 @@ export function App() {
     // this.setState({ largeImageURL, tags, showModal: !showModal });
   };
   const closeModal = () => {
-    setShowModal(!false);
-    // this.setState({ showModal: false });
+    setShowModal(false);
   };
 
   // const { isLoading, listImages, largeImageURL, tags, showModal, hasMore } =
