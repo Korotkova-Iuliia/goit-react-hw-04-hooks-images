@@ -18,71 +18,76 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [hasMore, setHasMore] = useState(false);
-  const getAxioslistImages = async () => {
-    // const { searchImage, page } = this.state;
-    // this.setState({ isLoading: true });
-    setIsLoading(true);
-    try {
-      const data = await getAxiosTag(searchImage, page);
-      setListImages([...listImages, ...data.hits]);
-      setIsLoading(false);
-      if (data.totalHits === 0) {
-        toast.warn('Cannot find your request!');
-      }
-      if (page > data.totalHits / 12 && data.totalHits !== 0) {
-        toast.warn('You reach end of search!');
-        setHasMore(false);
-      }
-      if (data.totalHits !== 0 && page === 1) {
-        toast.warn(`Hoooray! We search ${data.totalHits} images `);
-      }
-      return;
-    } catch (error) {
-      toast.warn('sorry, try again later');
-    }
-  };
   useEffect(() => {
-    setListImages([]);
-    setPage(1);
-    getAxioslistImages();
-  }, [searchImage]);
-  useEffect(() => {
-    setListImages([]);
-    setPage([1]);
-    scrollBy();
-    // if (listImages.length > 0) {
-    //   setListImages([]);
-    //   setPage([1]);
-    //   scrollBy();
-    //   // this.setState({ listImages: [], page: 1 });
-    // }
     const getAxioslistImages = async () => {
-      // const { searchImage, page } = this.state;
-      // this.setState({ isLoading: true });
       setIsLoading(true);
       try {
         const data = await getAxiosTag(searchImage, page);
         setListImages([...listImages, ...data.hits]);
         setIsLoading(false);
-        if (data.totalHits === 0) {
-          toast.warn('Cannot find your request!');
-        }
-        if (page > data.totalHits / 12 && data.totalHits !== 0) {
-          toast.warn('You reach end of search!');
-          setHasMore(false);
-        }
-        if (data.totalHits !== 0 && page === 1) {
-          toast.warn(`Hoooray! We search ${data.totalHits} images `);
-        }
+        scrollBy();
+        // if (data.totalHits === 0) {
+        //   toast.warn('Cannot find your request!');
+        // }
+        // if (page > data.totalHits / 12 && data.totalHits !== 0) {
+        //   toast.warn('You reach end of search!');
+        //   setHasMore(false);
+        // }
+        // if (data.totalHits !== 0 && page === 1) {
+        //   toast.warn(`Hoooray! We search ${data.totalHits} images `);
+        // }
         return;
       } catch (error) {
         toast.warn('sorry, try again later');
       }
     };
-    // if (prevState.searchImage !== searchImage || prevState.page !== page) {
-    //   this.getAxioslistImages();
-    // }
-  }, [listImages, page, searchImage]);
+    getAxioslistImages();
+  });
+
+  // useEffect(() => {
+  //   setListImages([]);
+
+  //   setPage([1]);
+  //   scrollBy();
+  //   // this.setState({ listImages: [], page: 1 });
+  // }, [searchImage]);
+  // useEffect(() => {
+  //   setListImages([]);
+  //   setPage([1]);
+  //   scrollBy();
+  //   // if (listImages.length > 0) {
+  //   //   setListImages([]);
+  //   //   setPage([1]);
+  //   //   scrollBy();
+  //   //   // this.setState({ listImages: [], page: 1 });
+  //   // }
+  //   // const getAxioslistImages = async () => {
+  //   //   // const { searchImage, page } = this.state;
+  //   //   // this.setState({ isLoading: true });
+  //   //   setIsLoading(true);
+  //   //   try {
+  //   //     const data = await getAxiosTag(searchImage, page);
+  //   //     setListImages([...listImages, ...data.hits]);
+  //   //     setIsLoading(false);
+  //   //     if (data.totalHits === 0) {
+  //   //       toast.warn('Cannot find your request!');
+  //   //     }
+  //   //     if (page > data.totalHits / 12 && data.totalHits !== 0) {
+  //   //       toast.warn('You reach end of search!');
+  //   //       setHasMore(false);
+  //   //     }
+  //   //     if (data.totalHits !== 0 && page === 1) {
+  //   //       toast.warn(`Hoooray! We search ${data.totalHits} images `);
+  //   //     }
+  //   //     return;
+  //   //   } catch (error) {
+  //   //     toast.warn('sorry, try again later');
+  //   //   }
+  //   // };
+  //   // if (prevState.searchImage !== searchImage || prevState.page !== page) {
+  //   //   this.getAxioslistImages();
+  //   // }
+  // }, [listImages, page, searchImage]);
 
   // componentDidUpdate(_, prevState) {
   //   // const { listImages, searchImage, page } = this.state;
@@ -107,9 +112,7 @@ export function App() {
   };
 
   const handleLoadMore = () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
-    }));
+    setPage(page => page + 1);
   };
   const handleSearchBar = imageName => {
     setSearchImage(imageName);
