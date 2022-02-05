@@ -13,41 +13,43 @@ import { Container } from './App.styled';
 export function App() {
   const [listImages, setListImages] = useState([]);
   const [searchImage, setSearchImage] = useState('');
-  const [largeImageURL, setLargeImageURL] = useState(null);
   const [page, setPage] = useState(1);
+  const [largeImageURL, setLargeImageURL] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [hasMore, setHasMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   useEffect(() => {
-    if (!searchImage) return;
-
+    if (searchImage === '') {
+      return;
+    }
     const getAxioslistImages = async () => {
       setIsLoading(true);
       try {
         const data = await getAxiosTag(searchImage, page);
-        setListImages(prevImages => [...listImages, ...data.hits]);
-        // setListImages([...listImages, data.hits]);
-        setSearchImage('');
+        setListImages(listImages => [...listImages, ...data.hits]);
         setIsLoading(false);
-        setHasMore(true);
-        scrollBy();
-        if (data.totalHits === 0) {
-          toast.warn('Cannot find your request!');
+        if (page !== 1) {
+          scrollBy();
         }
-        if (page > data.totalHits / 12 && data.totalHits !== 0) {
-          toast.warn('You reach end of search!');
-          setHasMore(false);
-        }
-        if (data.totalHits !== 0 && page === 1) {
-          toast.warn(`Hoooray! We search ${data.totalHits} images `);
-        }
-        return;
+        // if (data.totalHits === 0) {
+        //   return toast.warn('Cannot find your request!');
+        // }
+        // if (page > data.totalHits / 12 && data.totalHits !== 0) {
+        //   toast.warn('You reach end of search!');
+        //   setHasMore(false);
+        // }
+
+        // if (data.totalHits !== 0 && page === 1) {
+        //   return toast.warn(`Hoooray! We search ${data.totalHits} images `);
+        // }
+        // return;
       } catch (error) {
         toast.warn('sorry, try again later');
       }
     };
+
     getAxioslistImages();
-  }, [listImages, page, searchImage]);
+  }, [searchImage, page]);
 
   const scrollBy = () => {
     window.scrollBy({
@@ -64,26 +66,14 @@ export function App() {
     setListImages([]);
     setPage(1);
   };
-  //  const [listImages, setListImages] = useState([]);
-  //  const [searchImage, setSearchImage] = useState('');
-  //  const [largeImageURL, setLargeImageURL] = useState(null);
-  //  const [page, setPage] = useState(1);
-  //  const [isLoading, setIsLoading] = useState(false);
-  //  const [showModal, setShowModal] = useState(false);
-  //  const [hasMore, setHasMore] = useState(false);
-
-  const selectImages = (largeImageURL, tags, showModal) => {
+  const selectImages = (largeImageURL, showModal) => {
     setLargeImageURL(largeImageURL);
-    //  setTags(tags);
-    setShowModal(!showModal);
-    // this.setState({ largeImageURL, tags, showModal: !showModal });
+    setShowModal(true);
   };
   const closeModal = () => {
     setShowModal(false);
   };
 
-  // const { isLoading, listImages, largeImageURL, tags, showModal, hasMore } =
-  //   this.state;
   return (
     <>
       <GlobalStyle />
@@ -109,7 +99,7 @@ export function App() {
         )}
         {showModal && (
           <Modal onClose={closeModal}>
-            <img src={largeImageURL} alt={'tags'} />
+            <img src={largeImageURL} alt={'tag'} />
           </Modal>
         )}
         <ToastContainer position="top-center" autoClose={2000} />
@@ -117,16 +107,7 @@ export function App() {
     </>
   );
 }
-// export class App extends Component {
-//   state = {
-//     listImages: [],
-//     searchImage: '',
-//     page: 1,
-//     isLoading: false,
-//     largeImageURL: null,
-//     showModal: false,
-//     hasMore: true,
-//   };
+
 //   componentDidUpdate(_, prevState) {
 //     const { listImages, searchImage, page } = this.state;
 //     if (prevState.searchImage !== searchImage && listImages.length > 0) {
