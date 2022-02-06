@@ -4,7 +4,7 @@ import { Oval } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
-import getAxiosTag from './servise/ApiImage';
+import getAxiosTag from './service/ApiImage';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
 import { GlobalStyle } from './GlobalSyle';
